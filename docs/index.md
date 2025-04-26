@@ -1,17 +1,17 @@
-# Welcome to MkDocs
+# Seguidor de Linha - Titans
+<div align="center">
+  <font size="4"><p style="text-align: center; margin-bottom: 50px;"><b></b></p></font>
+</div>
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+<div align="center">
+<img src="view/logo.png" alt="Logo" style=" max-width: 100%; height: auto; margin-bottom: 20px;">
+</div>
 
-## Commands
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+## Sobre o projeto
 
-## Project layout
+Este repositório é dedicado à documentação de todos os artefatos criados pela frente do seguidor de linha da equipe de robótica da Titans.
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+O objetivo central do projeto é desenvolver um suuuuuuper seguidor de linhas miranha.
+
+</div>
