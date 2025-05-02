@@ -1,0 +1,97 @@
+#include <QTRSensors.h>
+#include <OrangutanLEDs.h>
+#include <OrangutanMotors.h>
+
+// pinos usados para os sensores
+#define PB0 8
+#define PB1 9
+#define PB2 10
+#define PB4 12
+#define PB5 13
+#define PD0 0
+#define PD1 1
+#define PD2 2
+#define PD4 4
+
+// diretiva de valor PWM para o motor
+#define MAX_VEL 200
+
+OrangutanLEDs leds;
+OrangutanMotors motors;
+
+class SensorArray {
+private:
+    static const uint8_t SensorCount = 8;
+    QTRSensorsRC qtr;
+    uint16_t sensorValues[SensorCount];
+    uint16_t position;
+
+public:
+    SensorArray() :
+        // 2.5 ms de tempo para esperar os sensores descarregarem antes de registrar próxima leitura
+        qtr((const uint8_t[]){PB0, PB1, PB2, PB4, PB5, PD0, PD1, PD2}, SensorCount, 2500, PD4) {}
+
+    void calibrationMode() {
+        digitalWrite(LED_BUILTIN, HIGH);
+        for (uint16_t i = 0; i < 400; i++) {
+            qtr.calibrate();
+            delay(5);
+        }
+        digitalWrite(LED_BUILTIN, LOW);
+        delay(1000);
+    }
+
+    void updatePosition() {
+        position = qtr.readLine(sensorValues);
+    }
+
+    uint16_t getPosition() {
+        return position;
+    }
+
+    void printSensorsValues() {
+        Serial.print("Valores dos sensores: ");
+        for (uint8_t i = 0; i < SensorCount; i++) {
+            Serial.print(sensorValues[i]);
+            Serial.print('\t');
+        }
+    }
+
+    void printPosition() {
+        Serial.print("Posição: ");
+        Serial.println(position);
+    }
+};
+
+SensorArray sensorQTR;
+
+void controlMotors(uint16_t position) {
+    if (position < 2000) {                  // vira para a direita
+        motors.setSpeeds(0, MAX_VEL);
+    }
+    else if (position > 5000) {             // vira para a esquerda
+        motors.setSpeeds(MAX_VEL, 0);
+    }
+    else {                                  // segue em frente
+        motors.setSpeeds(MAX_VEL, MAX_VEL);
+    }
+}
+
+void setup() {
+    pinMode(LED_BUILTIN, OUTPUT);
+    Serial.begin(9600);
+    delay(500);
+    motors.setSpeeds(200, 200);
+    leds.red(HIGH);
+    delay(500);
+    sensorQTR.calibrationMode();
+}
+
+void loop() {
+    sensorQTR.updatePosition();
+    sensorQTR.printSensorsValues();
+    sensorQTR.printPosition();
+    uint16_t posicao = sensorQTR.getPosition();
+    controlMotors(posicao);
+    delay(250);
+}
