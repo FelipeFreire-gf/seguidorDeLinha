@@ -3,15 +3,15 @@
 #include <OrangutanMotors.h>
 
 // pinos usados para os sensores
-#define PB0 8
-#define PB1 9
-#define PB2 10
-#define PB4 12
-#define PB5 13
-#define PD0 0
-#define PD1 1
-#define PD2 2
 #define PD4 4
+#define PC0 0
+#define PC1 1
+#define PC2 2
+#define PC3 3
+#define PC4 4
+#define PC5 5
+#define PD7 7
+#define PD2 2
 
 // diretiva de valor PWM para o motor
 #define MAX_VEL 200
@@ -29,7 +29,7 @@ private:
 public:
     SensorArray() :
         // 2.5 ms de tempo para esperar os sensores descarregarem antes de registrar próxima leitura
-        qtr((const uint8_t[]){PB0, PB1, PB2, PB4, PB5, PD0, PD1, PD2}, SensorCount, 2500, PD4) {}
+        qtr((const uint8_t[]){PD4, PC0, PC1, PC2, PC3, PC4, PC5, PD7}, SensorCount, 2500, PD2) {}
 
     void calibrationMode() {
         digitalWrite(LED_BUILTIN, HIGH);
@@ -66,12 +66,23 @@ public:
 SensorArray sensorQTR;
 
 void controlMotors(uint16_t position) {
-    if (position < 2000) {                  // vira para a direita
-        motors.setSpeeds(0, MAX_VEL);
+    if (position < 3000){
+      if (position < 2000) {                  // vira para a direita
+        motors.setSpeeds(MAX_VEL*0.75, MAX_VEL);
+      }
+      else{
+        motors.setSpeeds(MAX_VEL*0.90, MAX_VEL);
+      }
     }
-    else if (position > 5000) {             // vira para a esquerda
-        motors.setSpeeds(MAX_VEL, 0);
-    }
+    else
+      if(position > 4000){
+        if (position > 5000) {             // vira para a esquerda
+          motors.setSpeeds(MAX_VEL, MAX_VEL*0.75);
+        }
+        else{
+          motors.setSpeeds(MAX_VEL, MAX_VEL*0.90);
+        }
+      }
     else {                                  // segue em frente
         motors.setSpeeds(MAX_VEL, MAX_VEL);
     }
