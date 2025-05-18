@@ -58,7 +58,7 @@
 
 ---
 
-# Tabela de Versionamento 
+# Versionamento 
 
 
 | Versão | Data       | Descrição                                     | Autor(es)                                                             | Revisor(es)                                                          |
