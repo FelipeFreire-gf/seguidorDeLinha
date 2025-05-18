@@ -19,7 +19,7 @@ Veja a figura 1 abaixo:
 </div>
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/Requisitos-de-Software/2025.1-CelularSeguro/refs/heads/main/Docs/assets/Ferramentas/GitHub_Invertocat_Logo.svg.png" alt="Logo" width="200" height="200">
+<img src="https://raw.githubusercontent.com/FelipeFreire-gf/seguidorDeLinha/refs/heads/main/docs/view/lib.png" alt="Logo" width="1000" height="1000">
 </div>
 
 Para verificarmos se está tudo certo, entre na IDE do arduino selecione: Pololu Orangutan or 3pi robot w/ ATmega328P na board como na figura 2 a seguir:
@@ -29,7 +29,7 @@ Para verificarmos se está tudo certo, entre na IDE do arduino selecione: Pololu
 </div>
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/Requisitos-de-Software/2025.1-CelularSeguro/refs/heads/main/Docs/assets/Ferramentas/GitHub_Invertocat_Logo.svg.png" alt="Logo" width="200" height="200">
+<img src="https://raw.githubusercontent.com/FelipeFreire-gf/seguidorDeLinha/refs/heads/main/docs/view/selectPort.png" alt="Logo" width="1000" height="1000">
 </div>
 
 Na sequência vá em arquivo "file", exemplos "examples" e você verá os exemplos de código para a baby orangutan como a figura 3 a seguir:
@@ -39,17 +39,17 @@ Na sequência vá em arquivo "file", exemplos "examples" e você verá os exempl
 </div>
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/Requisitos-de-Software/2025.1-CelularSeguro/refs/heads/main/Docs/assets/Ferramentas/GitHub_Invertocat_Logo.svg.png" alt="Logo" width="200" height="200">
+<img src="https://raw.githubusercontent.com/FelipeFreire-gf/seguidorDeLinha/refs/heads/main/docs/view/exemplosPololu.png" alt="Logo" width="1000" height="1000">
 </div>
 
-Agora precisamos configurar a placa do arduino uno para funcionar como programadora ISP. Para isso vá em exemplos --> ArduinoISP e selecione o código conforme a figura 3, a seguir upe o mesmo para o arduino, não precisa ter nada conectado nela nesse primeiro momento, somente a usb. Não esqueça de manter o chip na placa!
+Agora precisamos configurar a placa do arduino uno para funcionar como programadora ISP. Para isso vá em exemplos --> ArduinoISP e selecione o código conforme a figura 4, a seguir upe o mesmo para o arduino, não precisa ter nada conectado nela nesse primeiro momento, somente a usb. Não esqueça de manter o chip na placa!
 
 <div align="center">
   <font size="4">Figura 4 - ArduinoISP<p style="text-align: center; margin-bottom: 50px;"><b></b></p></font>
 </div>
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/Requisitos-de-Software/2025.1-CelularSeguro/refs/heads/main/Docs/assets/Ferramentas/GitHub_Invertocat_Logo.svg.png" alt="Logo" width="200" height="200">
+<img src="https://raw.githubusercontent.com/FelipeFreire-gf/seguidorDeLinha/refs/heads/main/docs/view/arduinoIsp.png" alt="Logo" width="1000" height="1000">
 </div>
 
 Agora precisamos fazer as conexões Isp da baby orangutan no arduino uno, siga as conexões conforme a tabela 1 para o arduino uno e veja quais são os pinos da baby conforme a figura 5:
@@ -71,7 +71,7 @@ Agora precisamos fazer as conexões Isp da baby orangutan no arduino uno, siga a
 </div>
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/Requisitos-de-Software/2025.1-CelularSeguro/refs/heads/main/Docs/assets/Ferramentas/GitHub_Invertocat_Logo.svg.png" alt="Logo" width="200" height="200">
+<img src="https://raw.githubusercontent.com/FelipeFreire-gf/seguidorDeLinha/refs/heads/main/docs/view/facilitador.png" alt="Logo" width="1000" height="1000">
 </div>
 
 Com todas as conexões feitas basta ir na IDE em: ferramentas "tools" programmer e selecionar Arduino as ISP e pronto! Basta fazer o upload.
@@ -83,8 +83,8 @@ Com todas as conexões feitas basta ir na IDE em: ferramentas "tools" programmer
 Para ajudar ainda mais, fiz um vídeo explicando todo o passo a passo:
 
 <div style="text-align: center;">
-  <p><strong>Vídeo 1:</strong> <a href="https://youtu.be/iu7qwglUWPQ">Tutorial Baby</a></p>
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/iu7qwglUWPQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  <p><strong>Vídeo 1:</strong> <a href="https://youtu.be/">Tutorial Baby</a></p>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 
 ---
