@@ -4,19 +4,23 @@ repo_name: 2025.1-Seguidor de Linha
 site_name: Seguidor de Linha - Titans
 
 nav:
-  #- Landing Page: landing.html
+# - Landing Page: landing.html
   - Home: index.md
 
-  - Atas:
-    - Sprint 1:
-        - Ata 1: "atas-reuniao/ata-reuniao-1.md"
+#  - Atas:
+#    - Sprint 1:
+#        - Ata 1: "atas-reuniao/ata-reuniao-1.md"
 
   - Links:
     - Apresentação 1: "links/links.md" 
+
+  - Baby Orangutan:
+    - Orangutan: "baby/baby.md" 
+    - Tutorial Firmware Uno: "baby/uploadUno.md"
   
 
 theme:
-  logo: vieq/logo.png
+  logo: view/logoSL.png
   font:
     text: Montserrat
   name: material
