@@ -4,7 +4,7 @@
 </div>
 
 <div align="center">
-<img src="docs/view/logo.png" alt="Logo" style=" max-width: 400; height: auto; margin-bottom: 20px;">
+<img src="docs/view/logoSL.png" alt="Logo" style=" max-width: 400; height: auto; margin-bottom: 20px;">
 </div>
 
 
