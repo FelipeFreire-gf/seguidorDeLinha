@@ -28,6 +28,11 @@ unsigned long calibrationStart = 0;
 OrangutanMotors motors;
 OrangutanLEDs leds;
 
+// ------------------- PID -------------------
+const float Kp = 0.042;             // Valor dado por baseSpeed(150)/3500
+const float Kd = 0.5;               // Valor que há de ser ajustado ainda
+double lastError = 0;               // Primeira inicialização do ultimo erro é 0
+
 // ------------------- Setup -------------------
 void setup() {
   pinMode(LED_ON_PIN, OUTPUT);
@@ -99,10 +104,10 @@ void loop() {
 
   int position = (sum != 0) ? weightedSum / sum : 3500;
 
-  // Controle proporcional
+  // Controle PID
   int error = position - 3500;
-  float Kp = 0.05;
-  int turn = error * Kp;
+  int turn = error * Kp + (error - lastError) * Kd ;          // Computagem do ajustamento
+  lastError = error;                                          // Armazenamento do erro
 
   int baseSpeed = 150;
   int leftSpeed = baseSpeed + turn;
