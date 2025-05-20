@@ -17,6 +17,7 @@ nav:
   - Baby Orangutan:
     - Orangutan: "baby/baby.md" 
     - Tutorial Firmware Uno: "baby/uploadUno.md"
+    - Estado Atual: "baby/estadoAtt.md"
   
 
 theme:
