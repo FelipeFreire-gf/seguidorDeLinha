@@ -1,5 +1,7 @@
 # Coneções da Baby
 
+---
+
 Neste artefato mostraremos como estão as conexôes dos módulos atuais da baby orangutan, veja a figura 1:
 
 <div align="center">
@@ -16,38 +18,40 @@ A tabela 1 facilita a visualização das portas da microcontroladora:
   <font size="4">Tabela 1 - Conexões na Uno<p style="text-align: center; margin-bottom: 50px;"><b></b></p></font>
 </div>
 
+
 | Portas Baby | Referência dos pinos |
 |-------------|-----------------------------|
-| M1A         | 1 motor                     |
-| M1B         | 2 motor                     |
-| PB0         | 3                        |
-| PB1         | 4                         |
-| PB2         | 5                        |
-| PB4         | 6 ISP                        |
-| PB5         | 7 ISP                       |
-| PD0         | 8 RX                        |
-| PD1         | 9 TX                       |
-| PD2         | 10 LED ON QRE                        |
-| PD4         | 11                         |
-| PD7         | 12                          |
+| M1A         | motor                     |
+| M1B         | motor                     |
+| PB0         | 8 LED Teste                       |
+| PB1         | 9  livre                       |
+| PB2         | 10 livre                       |
+| PB4         | 12 ISP livre                        |
+| PB5         | 13 ISP livre                      |
+| PD0         | 0 RX bluetooth                       |
+| PD1         | 1 TX bluetooth                      |
+| PD2         | 2 LED ON QRE                        |
+| PD4         | 4 D1 QRE                        |
+| PD7         | 7 D8 QRE                        |
 | ---         | ---                         |
 | VIN         | + 7.4                       |
 | GND         | gnd                         |
-| M2A         | 21 motor                    |
-| M2B         | 20 motor                    |
-| PC5         | 19                        |
-| PC4         | 18                        |
-| PC3         | 17                         |
-| PC2         | 16                        |
-| PC1         | 15                         |
-| PC0         | 14                        |
-| ADC6        | 13                         |
-| RST         | MISO                        |
+| M2A         | motor                    |
+| M2B         | motor                    |
+| PC5         | A5 D7 QRE                      |
+| PC4         | A4 D6 QRE                      |
+| PC3         | A3 D5 QRE                       |
+| PC2         | A2 D4 QRE                      |
+| PC1         | A1 D3 QRE                       |
+| PC0         | A0 D2 QRE                      |
+| ADC6        | A6 livre                        |
+| RST         | rst                        |
 
+---
 
-## Referências dos pinos do sensor QRE-8D robocore
+## Código atual
 
-https://d229kd5ey79jzj.cloudfront.net/3047/QRE-8D_v1.0_schematic.pdf
+Branch: codAtual
 
 ---
 
@@ -56,3 +60,4 @@ https://d229kd5ey79jzj.cloudfront.net/3047/QRE-8D_v1.0_schematic.pdf
 | Versão | Data | Descrição da Alteração | Nome(s) Integrante(s) |
 | :----: | :--: | :--------------------: | :-------------------: |
 | 1.0 | 20/05/2025 | Desenvolvimento do Artefato| Felipe das Neves |
+| 1.1 | 23/05/2025 | Atualização do Artefato| Felipe das Neves |

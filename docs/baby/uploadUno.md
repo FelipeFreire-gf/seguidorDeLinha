@@ -1,5 +1,7 @@
 # Configuração do Ambiente
 
+---
+
 Utilizaremos a IDE do arduino para fazer o upload do firmware e para facilitar a programação utilizaremos a biblioteca: libpololu [clique aqui para fazer o download](https://drive.google.com/drive/folders/1fU-dqaXoqyCTu8M0kv1fU1vju6fAg0wP?usp=drive_link).
 
 Coloque a lib no seguinte caminho: 
@@ -82,10 +84,18 @@ Com todas as conexões feitas basta ir na IDE em: ferramentas "tools" programmer
 
 Para ajudar ainda mais, fiz um vídeo explicando todo o passo a passo:
 
-<div style="text-align: center;">
-  <p><strong>Vídeo 1:</strong> <a href="https://youtu.be/">Tutorial Baby</a></p>
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<div align="center">
+  <font size="4">Vídeo 1 - Tutorial<p style="text-align: center; margin-bottom: 50px;"><b></b></p></font>
 </div>
+
+<center>
+<video width="640" height="360" controls>
+  <source src="/videos/tuto_orangutan.mkv" type="video/mp4">
+  Seu navegador não suporta o elemento de vídeo.
+</video>
+</center>
+
+OBS.: Um detalhe que não comentei no vídeo é que só é necessário fazer a gravação do código do ArduinoISP uma vez, caso você upe outro código pro arduino, aí sim você irá precisar enviar o código ArduinoISP novamente.
 
 ---
 
