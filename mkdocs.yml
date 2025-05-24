@@ -11,13 +11,14 @@ nav:
 #    - Sprint 1:
 #        - Ata 1: "atas-reuniao/ata-reuniao-1.md"
 
-  - Links:
-    - Apresentação 1: "links/links.md" 
+  - Referências:
+    - Referencias: "links/links.md" 
 
   - Baby Orangutan:
     - Orangutan: "baby/baby.md" 
     - Tutorial Firmware Uno: "baby/uploadUno.md"
     - Estado Atual: "baby/estadoAtt.md"
+    - Linha do tempo: "linhaDoTempo/linhaDoTempo.md"
   
 
 theme:
