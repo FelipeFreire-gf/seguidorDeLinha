@@ -51,7 +51,7 @@ A tabela 1 facilita a visualização das portas da microcontroladora:
 
 ## Código atual
 
-Branch: codAtual
+Branch: codSeguidorPID
 
 ---
 
