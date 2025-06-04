@@ -49,3 +49,4 @@ Pronto! Basta colocar o carrinho para seguir linha. Recomendo fazer os testes no
 #### Obs
 
 Caso precise, o código da baby orangutan também está nesta branch para ser analisado
+Sugestão: Suba uma máquina vírtual para manter a integridade do SO
