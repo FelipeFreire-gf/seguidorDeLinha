@@ -13,61 +13,57 @@ QTRSensors qtr;
 const uint8_t sensorCount = 6;
 uint16_t sensorValues[sensorCount];
 
-int dadoBluetooth = 0;
 bool seguindoLinha = false;
 bool modoLento = false;
-bool usandoLinhaPreta = false; // true: segue linha preta; false: segue linha branca
+bool usandoLinhaPreta = false;
 
-int velocidadeLenta = 80;
+int velocidadeLenta = 50; // Velocidade base para o modo lento
+int centro = 2500;  // Posição central corrigida dos sensores (0-5000)
 
-// ---------- Controle PID ----------
-double Kp = 0.06;
+double Kp = 0.04;
 double Ki = 0.0005;
-double Kd = 0.3;
+double Kd = 0.5;
 
 int erroAnterior = 0;
-long erroIntegral = 0;
+long erroIntegral = 0; 
 
 void setup() {
   pinMode(LED_SENSOR, OUTPUT);
-  digitalWrite(LED_SENSOR, HIGH);
+  digitalWrite(LED_SENSOR, HIGH); 
 
   pinMode(LED_STATUS, OUTPUT);
-  digitalWrite(LED_STATUS, LOW);
+  digitalWrite(LED_STATUS, LOW); 
 
-  // Define sensores QTR com os pinos conectados
-  qtr.setTypeRC();
-  qtr.setSensorPins((const uint8_t[]){A4, A3, A2, A1, 8, 4}, sensorCount);
-  qtr.setEmitterPin(LED_SENSOR);
+  qtr.setTypeRC(); 
+  qtr.setSensorPins((const uint8_t[]){A4, A3, A2, A1, 8, 4}, sensorCount); // Sensores de 1 a 6
+  // qtr.setSensorPins((const uint8_t[]){8, A1, A2, A3, A4, A5}, sensorCount); // Sensores de 2 a 7
 
-  motors.setSpeeds(0, 0);
-  Serial.begin(9600);
-  delay(100);
+  qtr.setEmitterPin(LED_SENSOR;
+
+  motors.setSpeeds(0, 0); 
+  Serial.begin(9600); 
+  delay(100); 
 }
 
 void loop() {
   if (Serial.available()) {
     String comando = Serial.readStringUntil('\n');
-    comando.trim(); // remove espaços e quebras
+    comando.trim();
 
-    // ----------- COMANDOS DE CONTROLE MANUAL -----------
     if (comando == "1") {
-      // Liga os motores (velocidade 200) — modo manual
       digitalWrite(LED_STATUS, HIGH);
-      motors.setSpeeds(200, 200);
-      seguindoLinha = false;
+      motors.setSpeeds(200, 200); 
+      seguindoLinha = false; 
       Serial.println("Motores LIGADOS");
     }
     else if (comando == "2") {
-      // Desliga os motores
-      motors.setSpeeds(0, 0);
-      seguindoLinha = false;
+      motors.setSpeeds(0, 0); 
+      seguindoLinha = false; 
       Serial.println("Motores PARADOS");
     }
     else if (comando == "0") {
-      // Lê e imprime os valores atuais dos sensores
-      digitalWrite(LED_STATUS, LOW);
-      qtr.read(sensorValues);
+      digitalWrite(LED_STATUS, LOW); 
+      qtr.read(sensorValues); 
       Serial.println("Leitura dos sensores:");
       for (uint8_t i = 0; i < sensorCount; i++) {
         Serial.print("Sensor ");
@@ -75,89 +71,95 @@ void loop() {
         Serial.print(": ");
         Serial.println(sensorValues[i]);
       }
+      // Calcula a posição da linha (0 a 5000)
+      uint16_t pos = usandoLinhaPreta ? qtr.readLineBlack(sensorValues)
+                                      : qtr.readLineWhite(sensorValues);
+      Serial.print("Posição: ");
+      Serial.println(pos);
       Serial.println("----------------------");
     }
-
-    // ----------- MODOS DE SEGUIDOR DE LINHA -----------
     else if (comando == "3") {
-      // Ativa o modo de seguidor de linha NORMAL
       seguindoLinha = true;
-      modoLento = false;
-      erroAnterior = 0;
-      erroIntegral = 0;
+      modoLento = false; 
+      erroAnterior = 0; 
+      erroIntegral = 0; 
       Serial.println("MODO: SEGUIDOR DE LINHA NORMAL ATIVADO");
     }
     else if (comando == "5") {
-      // Ativa o modo de seguidor de linha LENTO
       seguindoLinha = true;
-      modoLento = true;
-      erroAnterior = 0;
-      erroIntegral = 0;
+      modoLento = true; 
+      erroAnterior = 0; 
+      erroIntegral = 0; 
       Serial.println("MODO: SEGUIDOR DE LINHA LENTO ATIVADO");
     }
-
-    // ----------- CALIBRAÇÃO DOS SENSORES -----------
     else if (comando == "4") {
-      calibrarSensores(); // Executa a calibração dos sensores
+      calibrarSensores(); 
     }
-
-    // ----------- AJUSTES E INFORMAÇÕES -----------
-    else if (comando == "6") {
-      // Mostra os parâmetros atuais
+    else if (comando == "6") { // Mostra os parâmetros atuais
       Serial.print("Kp: "); Serial.println(Kp);
       Serial.print("Ki: "); Serial.println(Ki);
       Serial.print("Kd: "); Serial.println(Kd);
       Serial.print("Velocidade: "); Serial.println(velocidadeLenta);
+      Serial.print("Centro: "); Serial.println(centro);
       Serial.print("Modo: Seguindo linha ");
       Serial.println(usandoLinhaPreta ? "PRETA" : "BRANCA");
     }
-    else if (comando.startsWith("p")) {
-      // Altera o valor de Kp (ex: p0.08)
-      Kp = comando.substring(1).toDouble();
+    else if (comando.startsWith("p")) { // Ajusta Kp
+      Kp = comando.substring(1).toFloat();
       Serial.print("Novo Kp: "); Serial.println(Kp);
     }
-    else if (comando.startsWith("i")) {
-      // Altera o valor de Ki (ex: i0.001)
-      Ki = comando.substring(1).toDouble();
+    else if (comando.startsWith("i")) { // Ajusta Ki
+      Ki = comando.substring(1).toFloat();
       Serial.print("Novo Ki: "); Serial.println(Ki);
     }
-    else if (comando.startsWith("d")) {
-      // Altera o valor de Kd (ex: d0.4)
-      Kd = comando.substring(1).toDouble();
+    else if (comando.startsWith("d")) { // Ajusta Kd
+      Kd = comando.substring(1).toFloat();
       Serial.print("Novo Kd: "); Serial.println(Kd);
     }
-    else if (comando.startsWith("v")) {
-      // Altera a velocidade lenta (ex: v100)
+    else if (comando.startsWith("v")) { // Ajusta velocidadeLenta
       velocidadeLenta = comando.substring(1).toInt();
       Serial.print("Nova velocidade lenta: "); Serial.println(velocidadeLenta);
     }
-
-    // ----------- DEFINIR TIPO DE LINHA -----------
-    else if (comando == "b") {
-      // Linha preta no fundo branco
+    else if (comando.startsWith("c")) { // Ajusta centro
+      centro = comando.substring(1).toInt();
+      Serial.print("Novo centro: "); Serial.println(centro);
+    }
+    else if (comando == "b") { // Muda para seguir linha PRETA
       usandoLinhaPreta = true;
       Serial.println("Modo: seguir linha PRETA");
     }
-    else if (comando == "w") {
-      // Linha branca no fundo preto
+    else if (comando == "w") { // Muda para seguir linha BRANCA
       usandoLinhaPreta = false;
       Serial.println("Modo: seguir linha BRANCA");
     }
   }
 
-  // ---------- LÓGICA DO SEGUIDOR DE LINHA ----------
+  // --- MODO PID: Seguir Linha ---
   if (seguindoLinha) {
     uint16_t pos = usandoLinhaPreta ? qtr.readLineBlack(sensorValues)
                                      : qtr.readLineWhite(sensorValues);
 
-    int erro = pos - 3500; // Posição ideal (meio) é 3500
+    int erro = pos - centro; 
+
     erroIntegral += erro;
+    // Limita o erro integral para evitar "wind-up" (acúmulo excessivo)
+    erroIntegral = constrain(erroIntegral, -10000, 10000); // Pode ajustar estes limites
     int derivada = erro - erroAnterior;
+    erroAnterior = erro; 
 
     int correcao = (int)(Kp * erro + Ki * erroIntegral + Kd * derivada);
-    erroAnterior = erro;
 
-    int velocidadeBase = modoLento ? velocidadeLenta : 150;
+    int velocidadeBase = modoLento ? velocidadeLenta : 150; // Use 150 para a velocidade normal, ajuste se precisar.
+
+    // Reduz a velocidade quando o robô está em uma curva acentuada ou quase perdendo a linha
+    int absErro = abs(erro); // Pega o valor absoluto do erro
+    // Se o erro for significativo (ex: > 1500), reduz a velocidade
+    // O valor '1500' é um ponto de partida, precisa ser ajustado nos seus testes!
+    // Quanto maior o 'absErro', maior a redução da velocidade.
+    if (absErro > 1500) {
+      // Garante que a velocidade não caia abaixo de um mínimo (ex: 60)
+      velocidadeBase = constrain(velocidadeBase - (absErro / 10), 60, velocidadeBase);
+    }
 
     int velEsq = velocidadeBase + correcao;
     int velDir = velocidadeBase - correcao;
@@ -165,38 +167,33 @@ void loop() {
     velEsq = constrain(velEsq, 0, 255);
     velDir = constrain(velDir, 0, 255);
 
-    motors.setSpeeds(velEsq, velDir); // Aplica correção PID
-  }
-}
+    motors.setSpeeds(velEsq, velDir);
 
-// ----------- FUNÇÃO DE CALIBRAÇÃO DOS SENSORES -----------
 void calibrarSensores() {
+  // Calibração manual
   Serial.println("INICIANDO CALIBRACAO...");
-  digitalWrite(LED_STATUS, HIGH);
-  delay(500);
+  digitalWrite(LED_STATUS, HIGH); 
+  delay(500); 
 
-  for (uint16_t i = 0; i < 50; i++) {
-    motors.setSpeeds(80, 80); // Movimento lento durante calibração
-    qtr.calibrate();
-    delay(25);
+  for (uint16_t i = 0; i < 100; i++) { 
+    // motors.setSpeeds(80, 80); 
+    qtr.calibrate(); 
+    delay(25); 
   }
 
-  motors.setSpeeds(0, 0);
-  digitalWrite(LED_STATUS, LOW);
+  motors.setSpeeds(0, 0); 
+  digitalWrite(LED_STATUS, LOW); 
   Serial.println("CALIBRACAO FINALIZADA!");
 
-  // Imprime valores calibrados
   Serial.println("Valores máximos:");
   for (uint8_t i = 0; i < sensorCount; i++) {
-    Serial.print(qtr.calibrationOn.maximum[i]);
-    Serial.print(" ");
+    Serial.print(qtr.calibrationOn.maximum[i]); Serial.print(" ");
   }
   Serial.println();
 
   Serial.println("Valores mínimos:");
   for (uint8_t i = 0; i < sensorCount; i++) {
-    Serial.print(qtr.calibrationOn.minimum[i]);
-    Serial.print(" ");
+    Serial.print(qtr.calibrationOn.minimum[i]); Serial.print(" ");
   }
   Serial.println();
   Serial.println("----------------------");
