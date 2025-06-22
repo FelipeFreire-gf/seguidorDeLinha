@@ -20,7 +20,7 @@ uint16_t sensorValues[sensorCount];
 // ------------ Sensores Laterais --------------
 // sensores vão de 0(branco) a 1000(preto)
 int contadorDireita = 0;                // Conta quantas vezes leu a linha da direita
-const int threshold = 910;              // Valor intermediario em que o sensor considera como preto ou branco
+int threshold = 910;                    // Valor intermediario em que o sensor considera como preto ou branco
 
 bool seguindoLinha = false;
 bool modoLento = false;
@@ -128,7 +128,7 @@ void setup() {
   pinMode(BRUSHED, OUTPUT);
 
   qtr.setTypeRC(); 
-  qtr.setSensorPins((const uint8_t[]){A0, A1, A2, A3, A4, A5}, sensorCount);          // Sensores de 1 a 6 (caso 8 sensores estiverem falhando)
+  qtr.setSensorPins((const uint8_t[]){A0, A1, A2, A3, A4, A5}, sensorCount);            // Sensores de 1 a 6 (caso 8 sensores estiverem falhando)
   //qtr.setSensorPins((const uint8_t[]){A0, A1, A2, A3, A4, A5, 7, 4}, sensorCount);    // Sensores de 1 a 8 (prototipo 3)
 
   qtr.setEmitterPin(LED_SENSOR);
@@ -153,6 +153,7 @@ void loop() {
       i = AJUSTA CONSTANTE I
       d = AJUSTA CONSTANTE D
       v = AJUSTA VELOCIDADE LENTA (DEVE SER SEGUIDO DE ALGUM VALOR COMO "v60")
+      t = AJUSTA THREHSOLD DO SENSOR LATERAL (DEVE SER SEGUIDO DE ALGUM VALOR COMO "t60")
       c = AJUSTA CENTRO (DEVE SER SEGUIDO DE ALGUM VALOR COMO "c3500")
       b = MODO: SEGUIR LINHA PRETA
       w = MODO: SEGUIR LINHA BRANCA
@@ -232,6 +233,10 @@ void loop() {
     else if (comando.startsWith("v")) { // Ajusta velocidadeLenta
       velocidadeLenta = comando.substring(1).toInt();
       Serial.print("Nova velocidade lenta: "); Serial.println(velocidadeLenta);
+    }
+    else if (comando.startsWith("t")) { // Ajusta threshold
+      threshold = comando.substring(1).toInt();
+      Serial.print("Novo threshold: "); Serial.println(threshold);
     }
     else if (comando.startsWith("c")) { // Ajusta centro
       centro = comando.substring(1).toInt();
